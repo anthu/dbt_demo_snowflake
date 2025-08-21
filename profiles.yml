@@ -7,6 +7,7 @@ tpch_medallion_snowflake:
       database: TPCH_MEDALLION_DBT_DB
       warehouse: COMPUTE_WH
       schema: dev
+      role: ACCOUNTADMIN
       user: ''
       account: ''
       threads: 4

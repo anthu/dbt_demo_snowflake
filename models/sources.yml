@@ -4,9 +4,9 @@ sources:
   - name: tpch
     description: >
       TPC-H benchmark data from Snowflake's shared sample database.
-      Using the tpch_sf10 dataset (10x the base size).
+      Using the tpch_sf1 dataset.
     database: snowflake_sample_data
-    schema: tpch_sf10
+    schema: tpch_sf1
     
     tables:
       - name: region

@@ -1,0 +1,13 @@
+tpch_medallion_snowflake:
+  target: snowflake
+  
+  outputs:
+    snowflake:
+      type: snowflake
+      database: TPCH_MEDALLION_DBT_DB
+      warehouse: COMPUTE_WH
+      schema: dev
+      user: ''
+      account: ''
+      threads: 4
+      query_tag: dbt_tpch_medallion_snowflake

@@ -88,7 +88,7 @@ select
     
     -- cross-regional analysis
     case 
-        when o.customer_region = s.supplier_region then 'DOMESTIC'
+        when o.customer_region = s.region_name then 'DOMESTIC'
         else 'INTERNATIONAL'
     end as trade_type,
     

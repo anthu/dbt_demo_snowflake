@@ -227,24 +227,3 @@ models:
               min_value: 0
               max_value: 1
               inclusive: true
-
-sources:
-  - name: tpch_raw
-    description: TPC-H benchmark raw data
-    tables:
-      - name: region
-        description: Region reference data
-      - name: nation
-        description: Nation reference data
-      - name: customer
-        description: Customer master data
-      - name: supplier
-        description: Supplier master data
-      - name: part
-        description: Part master data
-      - name: partsupp
-        description: Part-supplier relationship data
-      - name: orders
-        description: Order header data
-      - name: lineitem
-        description: Order line item data

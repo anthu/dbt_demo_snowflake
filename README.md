@@ -65,21 +65,44 @@ CREATE DATABASE IF NOT EXISTS TPCH_MEDALLION_DBT_DB
 CREATE OR REPLACE API INTEGRATION GITHUB_INTEGRATION
   api_provider = git_https_api
   api_allowed_prefixes = ('https://github.com')
-  enabled = true
+  enabled = true;
+
+-- Create network rules for dbt package downloads
+CREATE OR REPLACE NETWORK RULE dbt_hub_network_rule
+  MODE = EGRESS
+  TYPE = HOST_PORT
+  VALUE_LIST = ('hub.getdbt.com');
+
+-- Create external access integration for dbt deps
+CREATE OR REPLACE EXTERNAL ACCESS INTEGRATION dbt_external_access_integration
+  ALLOWED_NETWORK_RULES = (dbt_hub_network_rule)
+  ENABLED = TRUE
+  COMMENT = 'External access integration for dbt package dependencies';
 ```
 ---
 
-## Step 2: Create Git Integration
+## Step 2: Create dbt Project
 
-### Option A: Snowflake UI
+### Option A: Snowflake UI (Recommended)
 
-1. Navigate to **Projects** → **Git Repositories** in Snowsight
-2. Click **+Git Repository**
+1. Navigate to **Projects** → **Workspaces** in Snowsight
+2. Click on the Workspace Selector at the very to left
+3. Click **From Git Repository**
 3. Configure:
-   - **Name**: `TPCH_DBT_REPO`
-   - **Origin URL**: Your Git repository URL
-   - **Authentication**: Configure based on your Git provider
+   - **Repository URL**: `https://github.com/anthu/dbt_demo_snowflake`
+   - **Workspace Name**: `TPC-H dbt Workspace`
+   - **API Integration**: `GITHUB_INTEGRATION`
 4. Click **Create**
+
+#### Then deploy the dbt Project
+1. Click on the very top right Corner **Connect**
+2. Click **Deploy dbt project**
+3. Configure:
+   - **Database**: `TPCH_MEDALLION_DBT_DB`
+   - **Schema**: `PUBLIC`
+   - **Select or create dbt project**: Click **Create dbt prjoject**
+   - **Name**: `TPCH_DBT_REPO`
+4. Click **Deploy**
 
 ### Option B: SQL Commands
 
@@ -95,48 +118,21 @@ ALTER GIT REPOSITORY TPCH_MEDALLION_DBT_DB.PUBLIC.TPCH_DBT_REPO FETCH;
 
 -- Verify setup
 SHOW GIT BRANCHES IN TPCH_MEDALLION_DBT_DB.PUBLIC.TPCH_DBT_REPO;
-```
 
-**Security Note**: Use Snowflake secrets for credential management. Never commit credentials to version control.
-
----
-
-## Step 3: Create dbt Project in Snowflake
-
-### Option A: Snowflake UI
-
-1. Navigate to **Projects** → **dbt** in Snowsight
-2. Click **+ dbt Project**
-3. Configure:
-   - **Name**: `tpch_medallion_dbt_project`
-   - **Git Repository**: `TPCH_DBT_REPO`
-   - **Branch**: `main`
-   - **Database**: `TPCH_MEDALLION_DBT_DB`
-   - **Warehouse**: `COMPUTE_WH`
-   - **Schema**: `PUBLIC`
-   - **Role**: `ACCOUNTADMIN`
-4. Click **Create**
-
-### Option B: SQL Commands
-
-```sql
 -- Create dbt project
 CREATE OR REPLACE DBT PROJECT TPCH_MEDALLION_DBT_DB.PUBLIC.tpch_medallion_dbt_project
-  GIT_REPOSITORY = TPCH_MEDALLION_DBT_DB.PUBLIC.TPCH_DBT_REPO.TPCH_DBT_REPO
-  GIT_BRANCH = 'main'
-  DATABASE = TPCH_MEDALLION_DBT_DB
-  WAREHOUSE = COMPUTE_WH
-  SCHEMA = PUBLIC
-  ROLE = ACCOUNTADMIN
+  FROM '@TPCH_MEDALLION_DBT_DB.PUBLIC.TPCH_DBT_REPO/branches/main'
   COMMENT = 'TPC-H Medallion dbt project';
 
 -- Verify creation
 SHOW DBT PROJECTS;
 ```
 
+**Security Note**: Use Snowflake secrets for credential management. Never commit credentials to version control.
+
 ---
 
-## Step 4: Execute dbt Project
+## Step 3: Execute dbt Project
 
 ### In Snowflake UI (Snowsight)
 
@@ -146,6 +142,7 @@ SHOW DBT PROJECTS;
    ```
    dbt deps
    ```
+Note: when running `dbt deps`, use the previously created `dbt_external_access_integration` for External Network Access.
 
 4. Verify configuration:
    ```
@@ -169,6 +166,6 @@ SHOW DBT PROJECTS;
 ## Additional Resources
 
 - [dbt Documentation](https://docs.getdbt.com/)
-- [Snowflake Documentation](https://docs.snowflake.com/en/user-guide/data-engineering/dbt-projects-on-snowflake)
+- [dbt Projects in Snowflake Documentation](https://docs.snowflake.com/en/user-guide/data-engineering/dbt-projects-on-snowflake)
 - [dbt + Snowflake Best Practices](https://docs.snowflake.com/en/user-guide/ecosystem-dbt)
 - [TPC-H Benchmark Specification](http://www.tpc.org/tpch/)

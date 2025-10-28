@@ -71,7 +71,7 @@ CREATE OR REPLACE API INTEGRATION GITHUB_INTEGRATION
 CREATE OR REPLACE NETWORK RULE dbt_hub_network_rule
   MODE = EGRESS
   TYPE = HOST_PORT
-  VALUE_LIST = ('hub.getdbt.com');
+  VALUE_LIST = ('hub.getdbt.com', 'codeload.github.com');
 
 -- Create external access integration for dbt deps
 CREATE OR REPLACE EXTERNAL ACCESS INTEGRATION dbt_external_access_integration

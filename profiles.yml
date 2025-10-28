@@ -6,7 +6,7 @@ tpch_medallion_snowflake:
       type: snowflake
       database: TPCH_MEDALLION_DBT_DB
       warehouse: COMPUTE_WH
-      schema: dev
+      schema: public
       role: ACCOUNTADMIN
       user: ''
       account: ''

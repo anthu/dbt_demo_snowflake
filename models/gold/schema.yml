@@ -13,16 +13,10 @@ models:
         description: Total number of orders placed by customer
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: total_order_value
         description: Total value of all orders
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: customer_value_segment
         description: Customer value segmentation
         tests:
@@ -35,11 +29,6 @@ models:
               values: ['FREQUENT', 'REGULAR', 'OCCASIONAL', 'ONE_TIME']
       - name: on_time_delivery_rate
         description: On-time delivery rate for customer orders
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1
-              inclusive: true
 
   - name: gold_sales_analytics
     description: Sales analytics aggregated by multiple dimensions
@@ -52,37 +41,18 @@ models:
         description: Total number of line items
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: gross_revenue
         description: Gross revenue before discounts
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: net_revenue
         description: Net revenue after discounts
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: on_time_delivery_rate
         description: On-time delivery rate
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1
-              inclusive: true
       - name: return_rate
         description: Return rate
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1
-              inclusive: true
 
   - name: gold_supplier_performance
     description: Supplier performance metrics and rankings
@@ -96,23 +66,12 @@ models:
         description: Number of different parts supplied
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: total_revenue_generated
         description: Total revenue generated through this supplier
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: on_time_delivery_rate
         description: On-time delivery rate for supplier
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1
-              inclusive: true
       - name: revenue_performance_tier
         description: Revenue-based performance tier
         tests:
@@ -125,11 +84,6 @@ models:
               values: ['EXCELLENT', 'GOOD', 'FAIR', 'POOR']
       - name: return_rate
         description: Return rate for supplier products
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1
-              inclusive: true
 
   - name: gold_regional_analysis
     description: Regional trade and performance analysis
@@ -151,30 +105,18 @@ models:
         description: Total number of customers in region
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: net_revenue
         description: Net revenue for region
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: domestic_trade_value
         description: Value of domestic trade
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: international_trade_value
         description: Value of international trade
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
 
   - name: gold_monthly_kpis
     description: Monthly Key Performance Indicators for executive dashboards
@@ -188,42 +130,19 @@ models:
         description: Net revenue for the month
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: total_orders
         description: Total orders for the month
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: active_customers
         description: Number of active customers
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: on_time_delivery_rate
         description: On-time delivery rate for the month
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1
-              inclusive: true
       - name: domestic_revenue_pct
         description: Percentage of revenue from domestic trade
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1
-              inclusive: true
       - name: international_revenue_pct
         description: Percentage of revenue from international trade
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1
-              inclusive: true

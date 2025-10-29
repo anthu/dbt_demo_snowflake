@@ -28,9 +28,7 @@ This dbt project implements a **Bronze → Silver → Gold** medallion architect
 
 ### dbt Packages
 
-- `dbt-labs/dbt_utils` (v1.1.1)
-- `metaplane/dbt_expectations` (v0.10.9)
-- `dbt-labs/codegen` (v0.12.1)
+This project does not use any external dbt packages.
 
 ---
 
@@ -69,17 +67,6 @@ CREATE OR REPLACE API INTEGRATION GITHUB_INTEGRATION
   api_allowed_prefixes = ('https://github.com')
   enabled = true;
 
--- Create network rules for dbt package downloads
-CREATE OR REPLACE NETWORK RULE dbt_hub_network_rule
-  MODE = EGRESS
-  TYPE = HOST_PORT
-  VALUE_LIST = ('hub.getdbt.com', 'codeload.github.com');
-
--- Create external access integration for dbt deps
-CREATE OR REPLACE EXTERNAL ACCESS INTEGRATION dbt_external_access_integration
-  ALLOWED_NETWORK_RULES = (dbt_hub_network_rule)
-  ENABLED = TRUE
-  COMMENT = 'External access integration for dbt package dependencies';
 ```
 ---
 
@@ -140,23 +127,17 @@ SHOW DBT PROJECTS;
 
 1. Navigate to **Projects** → **dbt** → Select your project
 2. Click **Develop** to access the IDE
-3. Install dependencies:
-   ```
-   dbt deps
-   ```
-Note: when running `dbt deps`, use the previously created `dbt_external_access_integration` for External Network Access.
-
-4. Verify configuration:
+3. Verify configuration:
    ```
    dbt debug
    ```
 
-5. Build all models:
+4. Build all models:
    ```
    dbt build
    ```
 
-6. Run specific layers:
+5. Run specific layers:
    ```bash
    dbt run --select tag:bronze
    dbt run --select tag:silver

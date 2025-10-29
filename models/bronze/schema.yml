@@ -80,9 +80,6 @@ models:
         description: Retail price of part
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
 
   - name: bronze_orders
     description: Raw orders fact data from TPC-H dataset
@@ -103,9 +100,6 @@ models:
         description: Total price of order
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
       - name: o_orderdate
         description: Date when order was placed
         tests:
@@ -139,16 +133,10 @@ models:
         description: Quantity of items
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
       - name: l_extendedprice
         description: Extended price of line item
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
 
   - name: bronze_partsupp
     description: Raw part-supplier relationship data from TPC-H dataset
@@ -171,13 +159,7 @@ models:
         description: Available quantity
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: ps_supplycost
         description: Supply cost
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false

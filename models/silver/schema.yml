@@ -102,9 +102,6 @@ models:
         description: Retail price
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
       - name: price_category
         description: Price category
         tests:
@@ -135,9 +132,6 @@ models:
         description: Total order price
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
       - name: order_date
         description: Order date
         tests:
@@ -181,23 +175,14 @@ models:
         description: Quantity ordered
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
       - name: extended_price
         description: Extended price
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
       - name: final_price
         description: Final price after discount and tax
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
       - name: delivery_performance
         description: Delivery performance indicator
         tests:
@@ -230,16 +215,10 @@ models:
         description: Available quantity
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
       - name: supply_cost
         description: Supply cost
         tests:
           - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: false
       - name: stock_level_category
         description: Stock level categorization
         tests:
